@@ -50,7 +50,7 @@ def is_invalid(product_id: str) -> bool:
 def is_periodic(product_id: str) -> bool:
     """Determine if string consists of a repeated substring.
     
-    Uses the rotation method: https://algo.monster/liteproblems/459?
+    Uses the rotation method: https://algo.monster/liteproblems/459
     """
     product_id = str(product_id)
     return product_id in (product_id + product_id)[1:-1]
