@@ -94,7 +94,7 @@ if __name__ == "__main__":
         # OR position is close to 99 and rotation is positive and new_position is >= 100
         if (
             (position > 0 and new_position <= 0)
-            or (position <= 99 and new_position >= 100)
+            or (0 < position <= 99 and new_position >= 100)
         ):
             count += 1
         position = new_position % 100
