@@ -48,7 +48,10 @@ def is_invalid(product_id: str) -> bool:
 
 
 def is_periodic(product_id: str) -> bool:
-    """Determine if string consists of a repeated substring using the rotation method."""
+    """Determine if string consists of a repeated substring.
+    
+    Uses the rotation method: https://algo.monster/liteproblems/459?
+    """
     product_id = str(product_id)
     return product_id in (product_id + product_id)[1:-1]
 
@@ -76,7 +79,7 @@ print(f"Sum of invalid product IDs: {sum(invalid_product_ids)}")
 
 ############# Part 2: Detect periodicity in product IDs via rotation method ###########
 #
-# References:    https://algo.monster/liteproblems/459?utm_source=chatgpt.com
+# References:    https://algo.monster/liteproblems/459
 #               https://www.baeldung.com/cs/check-string-periodicity
 
 # First try with toy data from AoC
