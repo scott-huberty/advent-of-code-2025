@@ -105,3 +105,25 @@ all_product_ids = get_all_product_ids(string)
 periodic_product_ids = [pid for pid in all_product_ids if is_periodic(pid)]
 print(f"Number of periodic product IDs: {len(periodic_product_ids)}")
 print(f"Sum of periodic product IDs: {sum(periodic_product_ids)}")
+
+assert len(periodic_product_ids) == 859
+assert sum(periodic_product_ids) == 14582313461
+
+
+# Brute Force approach to check periodicity. Complexity O(n^2)?
+invalid_ids = []
+for pid in all_product_ids:
+    s = str(pid)
+    n = len(s)
+    for si in range(1, n):
+        if n % si != 0:
+            continue
+        substring = s[:si]
+        repetitions = n // si
+        if substring * repetitions == s:
+            invalid_ids.append(int(s))
+            break
+
+
+assert len(invalid_ids) == 859, "Brute force approach gave incorrect results!"
+assert sum(invalid_ids) == 14582313461, "Brute force approach gave incorrect results!"
