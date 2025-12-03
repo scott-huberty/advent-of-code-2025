@@ -1,3 +1,4 @@
+"""AoC 2025 Day 3: Lobby Layout - Joltage Maximization. Key concept: Monotonic Stack."""
 from pathlib import Path
 
 
