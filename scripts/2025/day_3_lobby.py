@@ -32,7 +32,6 @@ def max_joltage(bank: str, n_cells: int=2) -> str:
         # While we can still remove digits and the last chosen digit
         # is smaller than the current one, pop it to make the number larger.
         while k > 0 and stack and stack[-1] < d:
-            import pdb; pdb.set_trace()
             stack.pop()
             k -= 1
         stack.append(d)
