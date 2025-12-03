@@ -1,5 +1,6 @@
 """AoC 2025 Day 2: Gift Shop Inventory Validation. Key concept: String Periodicity."""
 from pathlib import Path
+import re
 
 
 def get_toy_data() -> str:
@@ -112,9 +113,14 @@ assert sum(periodic_product_ids) == 14582313461
 
 # Brute Force approach to check periodicity. Complexity O(n^2)?
 invalid_ids = []
+# regex approach:
+invalid_ids_re = []
 for pid in all_product_ids:
     s = str(pid)
     n = len(s)
+    re_pattern = re.compile(r"^(\d+)\1+$")
+    if re_pattern.match(s):
+        invalid_ids_re.append(int(s))
     for si in range(1, n):
         if n % si != 0:
             continue
@@ -124,6 +130,8 @@ for pid in all_product_ids:
             invalid_ids.append(int(s))
             break
 
-
 assert len(invalid_ids) == 859, "Brute force approach gave incorrect results!"
 assert sum(invalid_ids) == 14582313461, "Brute force approach gave incorrect results!"
+
+assert len(invalid_ids_re) == 859, "Brute force Regex approach gave incorrect results!"
+assert sum(invalid_ids_re) == 14582313461, "Brute force Regex approach gave incorrect results!"
