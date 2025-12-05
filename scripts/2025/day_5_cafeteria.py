@@ -113,6 +113,5 @@ if __name__ == "__main__":
     print(f"Available Ingredient IDs that are FRESH (part 1): {part_1_answer}")
     test_part_2()
     part_2_answer = solve_part_2()
-    db = get_input_data()
-    id_ranges, _ = parse_database(db, unique_id_ranges=True)
+    assert part_2_answer == 336495597913098
     print(f"Number of fresh Ingredient IDS (part 2): {part_2_answer}")
