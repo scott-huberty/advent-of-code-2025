@@ -22,12 +22,6 @@ def get_input_data() -> str:
     return input_path.read_text()
 
 
-def get_spoiled_ids(db: str) -> set[int]:
-    id_ranges, available_ids = parse_database(db)
-    spoiled_ids = available_ids - all_ids
-    return spoiled_ids
-
-
 def get_fresh_ids(db: str) -> set[int]:
     id_ranges, available_ids = parse_database(db)
     fresh_ids = []
@@ -41,16 +35,22 @@ def get_fresh_ids(db: str) -> set[int]:
     return fresh_ids
 
 
-def parse_database(db: str, unique_id_ranges: bool=False):
+def parse_database(db: str, unique_id_ranges: bool=False) -> tuple[list[tuple[int, int]], list[int]]:
     id_ranges, available_ids = map(str.splitlines, db.split("\n\n"))
     available_ids = list(map(int, available_ids))
-    id_ranges = [sorted(map(int, foo.split("-"))) for foo in id_ranges]
+    # id_ranges = [sorted(map(int, foo.split("-"))) for foo in id_ranges]
+    id_ranges = sorted(
+        [
+            tuple(int(part) for part in this_range.split("-"))
+            for this_range in id_ranges
+        ]
+    )
     if unique_id_ranges:
         id_ranges = remove_overlap(id_ranges)
     return id_ranges, available_ids
 
 
-def remove_overlap(ranges: list[list[int, int]]) -> list[list[int, int]]:
+def remove_overlap(ranges: list[tuple[int, int]]) -> list[tuple[int, int]]:
     result = []
     current_start = -1
     current_stop = -1
