@@ -50,6 +50,7 @@ def parse_database(db: str, unique_id_ranges: bool=False) -> tuple[list[tuple[in
 
 
 def remove_overlap(ranges: list[tuple[int, int]]) -> list[tuple[int, int]]:
+    # https://codereview.stackexchange.com/questions/21307/consolidate-list-of-ranges-that-overlap
     result = []
     current_start = -1
     current_stop = -1
