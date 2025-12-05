@@ -62,10 +62,10 @@ def remove_overlap(ranges: list[tuple[int, int]]) -> list[tuple[int, int]]:
             result.append((start, stop))
             current_start, current_stop = start, stop
         else:
-            # Segments overlap, replaace
-            result[-1] = (current_start, max(current_stop, stop))
+            # Segments overlap, replace
             # Current start already guaranteed to be lower
             current_stop = max(current_stop, stop)
+            result[-1] = (current_start, current_stop)
     return result
 
 
