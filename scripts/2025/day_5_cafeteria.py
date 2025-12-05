@@ -73,9 +73,8 @@ def inclusive_count(start, stop):
 
 
 def test_part_1():
+    """Test our solution on the AoC toy data"""
     db = get_toy_data()
-    # spoiled_ids = get_spoiled_ids(db)
-    # assert spoiled_ids == {1, 8, 32}
     fresh = get_fresh_ids(db)
     n_fresh = len(fresh)
     assert n_fresh == 3
@@ -83,16 +82,15 @@ def test_part_1():
 
 
 def solve_part_1():
+    """Get the available IDs that are contained within one of the ID ranges."""
     db = get_input_data()
     fresh_ids = get_fresh_ids(db)
     assert len(fresh_ids) == 613
     return len(fresh_ids)
     
+
 def test_part_2():
-    db = get_toy_data()
-    id_ranges, _ = parse_database(db)
-   
-def test_part_2():
+    """Test our solution on the AoC toy data"""
     db = get_toy_data()
     id_ranges, _ = parse_database(db, unique_id_ranges=True)
     n_fresh_ids = sum(inclusive_count(start, stop) for (start, stop) in id_ranges)
@@ -100,6 +98,7 @@ def test_part_2():
 
 
 def solve_part_2():
+    """Get the number of possible Fresh ingredient IDs, given the Fresh ID ranges."""
     db = get_input_data()
     id_ranges, _ = parse_database(db, unique_id_ranges=True)
     n_fresh_ids = sum(inclusive_count(start, stop) for (start, stop) in id_ranges)
@@ -110,7 +109,8 @@ if __name__ == "__main__":
     test_part_1()
     part_1_answer = solve_part_1()
     print(f"Available Ingredient IDs that are FRESH (part 1): {part_1_answer}")
+    assert part_1_answer == 613
     test_part_2()
     part_2_answer = solve_part_2()
-    assert part_2_answer == 336495597913098
     print(f"Number of fresh Ingredient IDS (part 2): {part_2_answer}")
+    assert part_2_answer == 336495597913098
