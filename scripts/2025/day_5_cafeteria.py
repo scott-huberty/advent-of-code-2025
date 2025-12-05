@@ -38,7 +38,6 @@ def get_fresh_ids(db: str) -> set[int]:
 def parse_database(db: str, unique_id_ranges: bool=False) -> tuple[list[tuple[int, int]], list[int]]:
     id_ranges, available_ids = map(str.splitlines, db.split("\n\n"))
     available_ids = list(map(int, available_ids))
-    # id_ranges = [sorted(map(int, foo.split("-"))) for foo in id_ranges]
     id_ranges = sorted(
         [
             tuple(int(part) for part in this_range.split("-"))
