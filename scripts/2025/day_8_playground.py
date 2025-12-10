@@ -41,12 +41,21 @@ def test_part_1():
     edges = compute_distances(coords)
     assert edges[0][1:] == ((162, 817, 812), (425, 690, 689))
 
-    sizes, _ = graph_cluster(coords, edges)
+    sizes, _ = union_find(coords, edges)
     assert sizes == [5, 4, 2, 2, 1, 1, 1, 1, 1, 1, 1], f"wrong sizes!: {sizes}"
     return sizes
 
 
-def graph_cluster(coords, edges, max_connections=10):
+def compute_distances(coords):
+    """Better."""
+    edges = []
+    for a, b in combinations(coords, 2):
+        edges.append((math.dist(a, b), a, b))
+    edges.sort(key=lambda x: x[0])
+    return edges
+
+
+def union_find(coords, edges, max_connections=10):
     dsu = DSU(coords)
 
     connections_made = 0
@@ -74,45 +83,10 @@ def graph_cluster(coords, edges, max_connections=10):
     return sizes, final_union
 
 
-def solve_part_1():
-    puzzle = get_input_data()
-    coords = [tuple(map(int, s.split(","))) for s in puzzle.splitlines()]
-
-    edges = compute_distances(coords)
-    sizes, _ = graph_cluster(coords, edges, max_connections=1000)
-    return sizes[0] * sizes[1] * sizes[2]
-
-
-def test_part_2():
-    puzzle = get_toy_data()
-    coords = [tuple(map(int, s.split(","))) for s in puzzle.splitlines()]
-
-    edges = compute_distances(coords)
-    sizes, final_union = graph_cluster(coords, edges, max_connections=None)
-    assert final_union == 25272
-    return final_union
-
-
-def solve_part_2():
-    puzzle = get_input_data()
-    coords = [tuple(map(int, s.split(","))) for s in puzzle.splitlines()]
-
-    edges = compute_distances(coords)
-    _, final_union = graph_cluster(coords, edges, max_connections=None)
-    return final_union
-
-
-def compute_distances(coords):
-    """Better."""
-    edges = []
-    for a, b in combinations(coords, 2):
-        edges.append((math.dist(a, b), a, b))
-    edges.sort(key=lambda x: x[0])
-    return edges
-
-
 class DSU:
+    """Dream State University I Mean Disjoint Set Union"""
     def __init__(self, coords):
+        # Each coordinate is its own parent initially.
         self.parent = {x: x for x in coords}
         self.size = {x: 1 for x in coords}
 
@@ -132,6 +106,34 @@ class DSU:
         self.parent[rb] = ra
         self.size[ra] += self.size[rb]
         return True
+
+
+def solve_part_1():
+    puzzle = get_input_data()
+    coords = [tuple(map(int, s.split(","))) for s in puzzle.splitlines()]
+
+    edges = compute_distances(coords)
+    sizes, _ = union_find(coords, edges, max_connections=1000)
+    return sizes[0] * sizes[1] * sizes[2]
+
+
+def test_part_2():
+    puzzle = get_toy_data()
+    coords = [tuple(map(int, s.split(","))) for s in puzzle.splitlines()]
+
+    edges = compute_distances(coords)
+    sizes, final_union = union_find(coords, edges, max_connections=None)
+    assert final_union == 25272
+    return final_union
+
+
+def solve_part_2():
+    puzzle = get_input_data()
+    coords = [tuple(map(int, s.split(","))) for s in puzzle.splitlines()]
+
+    edges = compute_distances(coords)
+    _, final_union = union_find(coords, edges, max_connections=None)
+    return final_union
 
 
 
